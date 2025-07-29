@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import (
-     QWidget, QPushButton,
-    QFileDialog, QLineEdit, QComboBox, QMessageBox, QFormLayout, QHBoxLayout,QSpacerItem, QSizePolicy
+     QWidget, QPushButton,QComboBox,
+    QFileDialog, QMessageBox, QFormLayout, QHBoxLayout,QSpacerItem, QSizePolicy,QVBoxLayout,QLabel,QGroupBox,QLineEdit
 )
+from PyQt5.QtCore import Qt
 from services.formInputValidator import FormInputValidator
 from services.sortorderValidator import SortOrderValidator
 from util.source import SourceOptions
@@ -15,33 +16,50 @@ class GuiApp(QWidget):
         # Apply clean stylesheet
         self.setStyleSheet("""
             QWidget {
-                font-size: 14px;
+                font-size: 15px;
+                background: #f7f9fa;
+            }
+            QGroupBox {
+                font-size: 16px;
+                font-weight: bold;
+                padding-top: 18px;
+            }
+            QLabel {
+                color: #333;
+                font-weight: bold;
             }
             QPushButton {
-                padding: 6px 12px;
-                border-radius: 6px;
-                background-color: #4CAF50;
+                padding: 8px 18px;
+                border-radius: 8px;
+                background-color: #1976d2;
                 color: white;
+                font-weight: bold;
+                border: none;
             }
             QPushButton:hover {
-                background-color: #45a049;
+                background-color: #1565c0;
             }
             QLineEdit {
-                padding: 4px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
+                padding: 6px;
+                border: 1.5px solid #b0bec5;
+                border-radius: 6px;
+                background: #f5f5f5;
             }
             QComboBox {
-                padding: 4px;
+                padding: 6px;
+                border: 1.5px solid #b0bec5;
+                border-radius: 6px;
+                background: #f5f5f5;
             }
         """)
 
-        layout = QFormLayout()
 
-        # Set consistent widths
+        form_layout = QFormLayout()
+        form_layout.setContentsMargins(10, 20, 10, 10)
+        
         field_width = 400
         button_width = 100
-
+        
         # DVBT File input
         self.dvbs_input = QLineEdit()
         self.dvbs_input.setReadOnly(True)
@@ -52,7 +70,7 @@ class GuiApp(QWidget):
         dvbt_row = QHBoxLayout()
         dvbt_row.addWidget(self.dvbs_input)
         dvbt_row.addWidget(self.dvbt_button)
-        layout.addRow("Upload DVBS File(JSON):", dvbt_row)
+        form_layout.addRow("Upload DVBS File(JSON):", dvbt_row)
 
         # File 2 input
         self.csv_input = QLineEdit()
@@ -64,30 +82,42 @@ class GuiApp(QWidget):
         file2_row = QHBoxLayout()
         file2_row.addWidget(self.csv_input)
         file2_row.addWidget(self.file2_button)
-        layout.addRow("Upload Tv DB File(CSV):", file2_row)
+        form_layout.addRow("Upload Tv DB File(CSV):", file2_row)
 
         # Dropdown
         self.dropdown = QComboBox()
         self.dropdown.setFixedWidth(field_width)
         self.dropdown.addItems([option.value for option in SourceOptions])
-        layout.addRow("Channel Source:", self.dropdown)
+        form_layout.addRow("Channel Source:", self.dropdown)
 
         # Add an empty row (spacer) before the Validate button
         spacer = QSpacerItem(0, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        layout.addItem(spacer)  # This adds vertical space
+        form_layout.addItem(spacer)
 
         # Submit Button
         self.submit_button = QPushButton("Validate")
-        self.submit_button.setFixedWidth(button_width)
+        self.submit_button.setFixedWidth(100)
         button_row = QHBoxLayout()
-        button_row.addStretch()  # Add stretch before the button
+        button_row.addStretch()
         button_row.addWidget(self.submit_button)
-        button_row.addStretch()  # Add stretch after the button
-        
-        layout.addRow(button_row)
+        button_row.addStretch()
+        form_layout.addRow(button_row)
 
         self.submit_button.clicked.connect(self.submit_files)
-        self.setLayout(layout)
+
+        # --- Add title and group box ---
+        main_layout = QVBoxLayout()
+        title = QLabel("Channel Order Validator")
+        title.setStyleSheet("font-size: 24px; font-weight: bold; color: #1976d2; margin-bottom: 20px;")
+        title.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(title)
+
+        form_group = QGroupBox("Validation Form")
+        form_group.setStyleSheet("QGroupBox { font-size: 16px; font-weight: bold; }")
+        form_group.setLayout(form_layout)
+        main_layout.addWidget(form_group)
+
+        self.setLayout(main_layout)
 
     def browse_file1(self):
         file_name, _ = QFileDialog.getOpenFileName(self, "Select DVBS File")
