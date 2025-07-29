@@ -36,6 +36,10 @@ This is a simple cross-platform desktop application built with PyQt5 that displa
 Navigate to the `src` folder and run:
    python app.py
 
+## Run the tests
+Navigate to the `src` folder and run:
+   python -m unittest discover -s tests
+
 ## 🛠 Packaging with PyInstaller
 Install PyInstaller:
    pip install pyinstaller

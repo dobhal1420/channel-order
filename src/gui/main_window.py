@@ -10,7 +10,7 @@ from util.source import SourceOptions
 class GuiApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Channel Order Validator:V1.0")
+        self.setWindowTitle("Channel Order Validator: 1.0")
         self.setFixedSize(1000, 700)  # Prevent distortion on resize
 
         # Apply clean stylesheet
@@ -107,12 +107,12 @@ class GuiApp(QWidget):
 
         # --- Add title and group box ---
         main_layout = QVBoxLayout()
-        title = QLabel("Channel Order Validator")
+        title = QLabel("Live Middleware")
         title.setStyleSheet("font-size: 24px; font-weight: bold; color: #1976d2; margin-bottom: 20px;")
         title.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(title)
 
-        form_group = QGroupBox("Validation Form")
+        form_group = QGroupBox("Channel Order Validation")
         form_group.setStyleSheet("QGroupBox { font-size: 16px; font-weight: bold; }")
         form_group.setLayout(form_layout)
         main_layout.addWidget(form_group)
