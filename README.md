@@ -26,6 +26,10 @@ This is a simple cross-platform desktop application built with PyQt5 that displa
    ```
    pip install -r requirements.txt
    ```
+6. Only if you installed new dependencies don't forget to add it to requirement.txt
+   ```
+   pip freeze > requirements.txt
+   ```
 
 
 ## 🚀 Run the App
