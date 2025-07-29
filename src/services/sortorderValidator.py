@@ -65,8 +65,8 @@ class SortOrderValidator:
                 )
                 overflow_channel_data_list.append(channel_tv_db)
 
-            if len(comparison_result) == 0:
-                return True, "LCN order for pre-sort channels on TV matches perfectly with pre-sort file"
-            else:
-                errors = "\n".join(comparison_result)
-                return False, f"Validation Failed:\n{errors}"
+        if len(comparison_result) == 0:
+            return True, "LCN order for pre-sort channels on TV matches perfectly with pre-sort file"
+        else:
+            errors = "\n".join(comparison_result)
+            return False, f"Validation Failed:\n{errors}"

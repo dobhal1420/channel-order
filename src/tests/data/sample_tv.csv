@@ -1,0 +1,4 @@
+display_name,display_number,type
+ChannelA,1,TYPE_DVB_S
+ChannelB,2,TYPE_DVB_S
+ChannelC,3,TYPE_DVB_S
